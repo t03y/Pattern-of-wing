@@ -1,0 +1,582 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<map proto="1.3.3">
+
+  <!-- マップ名 -->
+  <name>Pattern of Wing</name>
+
+  <!--  マップバージョン  -->
+  <version>1.5.2</version>
+  
+  <!--
+       更新履歴
+       v1.0.0 2016/1/10
+        初版
+       v1.1.0 2016/1/12
+        装飾追加・修正、チェスト内アイテム追加
+       v1.2.0 2016/1/21
+        マップ移動修正、台座修正
+       v1.2.1 2016/1/27
+        xml追加同封、その他細かい修正
+       v1.3.0 2016/2/6
+        各羊毛部屋周辺の移動修正、スポーン座標修正、拠点修正
+       v1.4.0 2016/2/27
+        地下通路デザイン簡素化、マップ容量軽量化、拠点に１４個の隠れとみぃさん追加
+       v1.4.1 2016/2/28
+        装飾ミス修正追加、防衛アイテム追加、観戦者スポーン屋根追加
+       v1.4.2 2016/3/7
+        羊毛部屋装備・初期装備エンチャ効果削除、アイテムスロット見直し・矢1s追加、装飾ミス修正
+       v1.5.0 2016/3/30
+        防壁追加、山に水追加、窪み追加、ビーコン破壊不能化、最高高度を50～35に変更
+       v1.5.1 2016/4/9
+        ビーコン削除
+       v1.5.2 2016/5/4
+        防壁構造変更、範囲外編集修正
+  -->
+  
+  <!--  マップの説明  -->
+  <objective>敵陣から羊毛を奪い、自陣の台座に設置する/Take the enemy's wool located to either side of the enemy's base and place it in your victory monument.</objective>
+  
+  <!--  製作者  -->
+  <authors>
+    <author>t03y</author>
+  </authors>
+  
+  <!--  チーム定義  --> 
+  <teams>
+    <team color="dark green" max="32">Green Team</team>
+    <team color="dark purple" max="32">Purple Team</team>
+   </teams>
+   
+  <!--   初期装備   -->
+  <kits>
+    <!-- 共通装備 -->
+    <kit name="spawn">
+      <item slot="0">iron sword</item>
+      <item slot="1">bow</item>
+      <item slot="2">iron pickaxe</item>
+      <item slot="3">iron_axe</item>
+      <item slot="4" amount="2">golden_apple</item>
+      <item slot="5" amount="64">QUARTZ_BLOCK</item>
+      <item slot="8" amount="64">cooked beef</item>
+      <item slot="9" amount="64" bind="true">arrow</item>
+      <item slot="10" amount="64" bind="true">arrow</item>
+      
+      <potion duration="12" amplifier="50">regeneration</potion>
+      <potion duration="12" amplifier="50">damage resistance</potion>
+    </kit>
+    
+    <!-- グリーン装備 -->
+    <kit name="green" parents="spawn">
+      <helmet bind="true" color="00aa00">leather helmet</helmet>
+      <chestplate bind="true" color="00aa00">leather chestplate</chestplate>
+      <leggings bind="true" color="00aa00">leather leggings</leggings>
+      <boots bind="true" color="00aa00">leather boots</boots>
+      
+      <item slot="6" amount="64" damage="13">STAINED_GLASS</item>
+    </kit>
+    
+    <!-- パープル装備 -->
+    <kit name="purple" parents="spawn">
+      <helmet bind="true" color="aa00aa">leather helmet</helmet>
+      <chestplate bind="true" color="aa00aa">leather chestplate</chestplate>
+      <leggings bind="true" color="aa00aa">leather leggings</leggings>
+      <boots bind="true" color="aa00aa">leather boots</boots>
+      
+      <item slot="6" amount="64" damage="10">STAINED_GLASS</item>
+    </kit>
+  </kits>
+  
+  <!--   アイテムドロップ拒否   -->
+  <itemremove>
+    <!-- 初期装備/アイテム -->
+    <item>iron sword</item>
+    <item>iron pickaxe</item>
+    <item>iron axe</item>
+    <item>bow</item>
+    <item>leather leggings</item>
+    <item>leather boots</item>
+    <item>leather helmet</item>
+    <item>leather chestplate</item>
+    <item>cooked beef</item>
+    <item>STAINED_GLASS</item>
+    <item>arrow</item>
+    <item>golden apple</item>
+    <item>quartz_block</item>
+    
+    <!-- 追加装備 -->
+    <item>iron leggings</item>
+    <item>iron chestplate</item>
+    <item>iron boots</item>
+    <item>iron helmet</item>
+    <item>shears</item>
+    <item>bucket</item>
+    <item>iron_axe</item>
+    <item>iron_spade</item>
+    
+    <!-- 羊毛部屋装備 -->
+    <item>diamond_chestplate</item>
+    <item>diamond_boots</item>
+    <item>diamond_sword</item>
+    <item>diamond_pickaxe</item>
+    
+    <!-- 羊毛 -->
+    <item damage="1">wool</item>
+    <item damage="3">wool</item>
+    <item damage="6">wool</item>
+    <item damage="9">wool</item>
+    
+  </itemremove>  
+  
+  <!--   スポーン地点指定   -->
+  <spawns>
+    <spawn team="purple" yaw="-90" kit="purple">
+      <cuboid min="-142,32,-1" max="-141,32,1"/>
+    </spawn>
+    <spawn team="green" yaw="90" kit="green">
+      <cuboid min="141,32,1" max="140,32,-1"/>
+    </spawn>
+    <default yaw="-180">
+      <cuboid min="-2,33,60" max="2,33,63"/>
+    </default>
+  </spawns>
+  
+  <!--   フィルター定義   -->
+  <filters>
+    <!-- グリーンチームのみ侵入許可 -->
+    <filter name="only-green" parents="deny-players deny-world">
+      <allow>
+        <team>green</team>
+      </allow>
+    </filter>
+    
+    <!-- パープルチームのみ侵入許可 -->
+    <filter name="only-purple" parents="deny-players deny-world">
+      <allow>
+        <team>purple</team>
+      </allow>
+    </filter>
+    
+    <!-- 鉄破壊許可 -->
+    <filter name="only-iron" parents="deny-blocks">
+      <allow>
+        <block>iron_block</block>
+      </allow>
+    </filter>
+    
+    <filter name="allow-breaks"><!--  拠点保護用  -->
+            <block>iron block</block>
+    </filter>
+    
+    <!-- チェスト破壊不可 -->
+    <filter name="deny-chest">
+      <deny>
+        <block>chest</block>
+      </deny>
+    </filter>
+    
+    <filter name="wools">
+      <block>wool</block>
+    </filter>
+    
+    <!-- ビーコン破壊不可 -->
+    <filter name="deny-beacon">
+      <deny>
+        <block>beacon</block>
+      </deny>
+    </filter>
+    
+    <!-- 領域外設置不可 -->
+    <filter name="no-void">
+       <not>
+         <void/>
+       </not>
+    </filter>
+  </filters>
+  
+  <!--   リージョン定義   -->
+  <regions>
+    <!-- 範囲指定 -->
+    <!--   拠点   -->
+    <union name="green-base">
+      <rectangle min="116,37" max="117,-37"/>
+      <rectangle min="118,36" max="119,-36"/>
+      <rectangle min="120,35" max="123,-35"/>
+      <rectangle min="124,34" max="126,-34"/>
+      <rectangle min="127,33" max="129,-33"/>
+      <rectangle min="130,32" max="131,-32"/>
+      <rectangle min="132,31" max="132,-31"/>
+      <rectangle min="133,30" max="133,-30"/>
+      <rectangle min="134,29" max="135,-29"/>
+      <rectangle min="136,28" max="136,-28"/>
+      <rectangle min="137,27" max="137,-27"/>
+      <rectangle min="138,25" max="138,-25"/>
+      <rectangle min="139,24" max="139,-24"/>
+      <rectangle min="140,23" max="140,-23"/>
+      <rectangle min="141,21" max="141,-21"/>
+      <rectangle min="142,18" max="142,-18"/>
+      <rectangle min="143,15" max="151,-15"/>
+    </union>
+    
+    <union name="purple-base">
+      <rectangle min="-117,-38" max="-118,38"/>
+      <rectangle min="-119,-36" max="-120,36"/>
+      <rectangle min="-121,-35" max="-124,35"/>
+      <rectangle min="-125,-34" max="-127,34"/>
+      <rectangle min="-128,-33" max="-130,33"/>
+      <rectangle min="-131,-32" max="-132,32"/>
+      <rectangle min="-133,-31" max="-133,31"/>
+      <rectangle min="-134,-30" max="-134,30"/>
+      <rectangle min="-135,-29" max="-136,29"/>
+      <rectangle min="-137,-28" max="-137,28"/>
+      <rectangle min="-138,-27" max="-138,27"/>
+      <rectangle min="-139,-25" max="-139,25"/>
+      <rectangle min="-140,-24" max="-140,24"/>
+      <rectangle min="-141,-23" max="-141,23"/>
+      <rectangle min="-142,-21" max="-142,21"/>
+      <rectangle min="-143,-18" max="-143,18"/>
+      <rectangle min="-144,-15" max="-152,15"/>
+    </union>
+    
+    <union name="base">
+      <region name="purple-base"/>
+      <region name="green-base"/>
+    </union>
+    
+    <complement name="bases">
+      <region name="base"/>
+      <block location="148,20,-13"/>
+      <block location="148,20,13"/>
+      <block location="-149,20,-13"/>
+      <block location="-149,20,13"/>
+    </complement>
+    
+    <!-- グリーンチーム羊毛部屋 -->
+    <union name="green-wool-rooms">
+      <!--   Cyan Wool Room   -->
+      <rectangle min="133,113" max="137,113"/>
+      <rectangle min="131,112" max="139,112"/>
+      <rectangle min="130,111" max="140,111"/>
+      <rectangle min="129,110" max="141,109"/>
+      <rectangle min="128,108" max="142,104"/>
+      <rectangle min="129,103" max="141,99"/>
+      <rectangle min="128,98" max="142,88"/>
+      <!--   Light Blue Wool Room   -->
+      <rectangle min="137,-113" max="133,-113"/>
+      <rectangle min="139,-112" max="131,-112"/>
+      <rectangle min="140,-111" max="130,-111"/>
+      <rectangle min="141,-110" max="129,-109"/>
+      <rectangle min="142,-108" max="128,-104"/>
+      <rectangle min="141,-102" max="129,-99"/>
+      <rectangle min="142,-98" max="128,-88"/>
+    </union>
+    
+    <!-- パープルチーム羊毛部屋 -->
+    <union name="purple-wool-rooms">
+      <!--   Pink Wool Room   -->
+      <rectangle min="-134,-113" max="-138,-113"/>
+      <rectangle min="-132,-112" max="-140,-112"/>
+      <rectangle min="-131,-111" max="-141,-111"/>
+      <rectangle min="-130,-110" max="-142,-109"/>
+      <rectangle min="-129,-108" max="-143,-104"/>
+      <rectangle min="-130,-103" max="-142,-99"/>
+      <rectangle min="-129,-98" max="-143,-88"/>
+      <!--   Orange Wool Room   -->
+      <rectangle min="-138,113" max="-134,113"/>
+      <rectangle min="-140,112" max="-132,112"/>
+      <rectangle min="-141,111" max="-131,111"/>
+      <rectangle min="-142,110" max="-130,109"/>
+      <rectangle min="-143,108" max="-129,104"/>
+      <rectangle min="-142,103" max="-130,99"/>
+      <rectangle min="-143,98" max="-129,88"/>
+    </union>
+    
+    <!-- ビーコンエリア -->
+    <union name="beacon-area">
+      <!-- green-team -->
+      <cuboid min="78,9,-7" max="92,1,7"/>
+      <!-- purple-team -->
+      <cuboid min="-79,9,7" max="-93,1,-7"/>
+    </union>
+    
+    <!--  保護適用 -->
+    <!--   拠点共通   -->
+    <apply block-break="only-iron" block-place="deny-blocks" message="You may not modify base.">
+      <region name="bases"/>
+    </apply>
+    
+    <apply block-break="allow-breaks" block-place="deny-place" message="You can't modify this area.">
+            <region name="bases"/>
+    </apply>
+    
+    <!--   パープル拠点   -->
+    <apply enter="only-purple" message="You may not enter enemy base.">
+      <region name="purple-base"/>
+    </apply>
+    
+    <!--   グリーン拠点   -->
+    <apply enter="only-green" message="You may not enter enemy base.">
+      <region name="green-base"/>
+    </apply>
+    
+    <!--   羊毛部屋共通   -->
+    <apply block="deny-chest" message="You may not modify wool room chest.">
+      <region name="green-wool-rooms"/>
+      <region name="purple-wool-rooms"/>
+    </apply>
+    
+    <!--   パープルチーム羊毛部屋   -->
+    <apply enter="only-green" message="You may not enter your own wool room.">
+      <region name="purple-wool-rooms"/>
+    </apply>
+    <apply block="only-green" use="only-green" message="You may not modify your own wool room.">
+      <region name="purple-wool-rooms"/>
+    </apply>
+    
+    <!--   グリーンチーム羊毛部屋   -->
+    <apply enter="only-purple" message="You may not enter your own wool room.">
+      <region name="green-wool-rooms"/>
+    </apply>
+    <apply block="only-purple" use="only-purple" message="You may not modify your own wool room.">
+      <region name="green-wool-rooms"/>
+    </apply>
+    
+    <!--    ビーコン    -->
+    <apply block="deny-beacon" message="You can not break the beacon.">
+      <region name="beacon-area"/>
+    </apply>
+    
+    <!-- 領域外 -->
+    <apply block="no-void" message="You may not modify void.">
+      <rectangle min="-oo,-oo" max="oo,oo"/>
+    </apply>
+  </regions>
+   
+  <!--   建築最高高度   -->
+  <maxbuildheight>35</maxbuildheight>
+  
+  <!-- 時間固定 -->
+  <timelock>on</timelock>
+  
+  <!--  羊毛設置座標  -->
+  <wools>
+    <wool team="green" color="pink">
+      <block location="148,20,-13"/>
+    </wool>
+    
+    <wool team="green" color="orange">
+      <block location="148,20,13"/>
+    </wool>
+    
+    <wool team="purple" color="light_blue">
+      <block location="-149,20,-13"/>
+    </wool>
+    
+    <wool team="purple" color="cyan">
+      <block location="-149,20,13"/>
+    </wool>
+  </wools>
+  
+  <renewables>
+     <renewable rate="1" particles="false" sound="false" avoid-entities="true">
+         <region>
+            <region name="base"/>
+         </region>
+         <renew>iron block</renew>
+         <replace>air</replace>
+     </renewable>
+  </renewables>
+    
+  <!-- ドロップ制御 -->
+  <blockdrops>
+    <!-- 拠点鉄ブロック -->
+    <rule>
+      <region>
+        <region name="base"/>
+      </region>
+      <filter>
+        <block>iron block</block>
+      </filter>
+      <drops>
+        <item>iron block</item>
+      </drops>
+      <direct>true</direct>
+      <replacement>iron_block</replacement>
+      <wrongtool>true</wrongtool>
+      <restore-time>0</restore-time>
+    </rule>
+    
+    <!--   羊毛部屋羊毛ドロップ   -->
+    <!--   Pink Wool   -->
+    <rule>
+      <region>
+        <block>-136,26,-106</block>
+      </region>
+      <filter>
+        <block>wool</block>
+      </filter>
+      <drops>
+        <item amount="1" damage="6">wool</item>
+      </drops>
+      <replacement>wool:6</replacement>
+      <direct>true</direct>
+      <wrongtool>true</wrongtool>
+    </rule>
+    
+    <!--   Orange Wool   -->
+    <rule>
+      <region>
+        <block>-136,26,106</block>
+      </region>
+      <filter>
+        <block>wool</block>
+      </filter>
+      <drops>
+        <item amount="1" damage="1">wool</item>
+      </drops>
+      <replacement>wool:1</replacement>
+      <direct>true</direct>
+      <wrongtool>true</wrongtool>
+    </rule>
+    
+    <!--   Cyan Wool   -->
+    <rule>
+      <region>
+        <block>135,26,106</block>
+      </region>
+      <filter>
+        <block>wool</block>
+      </filter>
+      <drops>
+        <item amount="1" damage="9">wool</item>
+      </drops>
+      <replacement>wool:9</replacement>
+      <direct>true</direct>
+      <wrongtool>true</wrongtool>
+    </rule>
+    
+    <!--   Light Blue Wool   -->
+    <rule>
+      <region>
+        <block>135,26,-106</block>
+      </region>
+      <filter>
+        <block>wool</block>
+      </filter>
+      <drops>
+        <item amount="1" damage="3">wool</item>
+      </drops>
+      <replacement>wool:3</replacement>
+      <direct>true</direct>
+      <wrongtool>true</wrongtool>
+    </rule>
+  </blockdrops>
+  
+  <!--   キルボーナス   -->
+  <killreward>
+    <item amount="1">golden_apple</item>
+  </killreward>
+
+  <!--   ローカライズ   -->
+  <locales>
+    <locale lang="ja_JP">
+      <string name="Take the enemy's wool located to either side of the enemy's base and place it in your victory monument." value="敵陣の羊毛部屋から羊毛を奪取し、自陣の台座に設置。"/>
+      <string name="You may not modify base." value="拠点は編集できません。"/>
+      <string name="You may not modify outside." value="範囲外は編集できません。"/>
+      <string name="You may not enter enemy base." value="敵の拠点には侵入できません。"/>
+      <string name="You may not enter your own wool room." value="自陣の羊毛部屋には侵入できません。"/>
+      <string name="You may not modify your own wool room." value="自陣の羊毛部屋は編集できません。"/>
+      <string name="You may not modify wool room chest." value="羊毛部屋のチェストは編集できません。"/>
+      <string name="You may not modify void." value="領域外は編集出来ません。"/>
+      <string name="You can't modify this area." value="ここは編集出来ません。"/>
+      <string name="You can not break the beacon." value="ビーコンは破壊できません。"/>
+    </locale>
+  </locales>
+
+  <!--   チュートリアル   -->
+  <include src="tutorial.xml"/>
+  <tutorial>
+    <stage title="Capture the Wool(CTW)">
+      <message>
+        <line>This map is a `a`lCapture the Wool`r(CTW) map.</line>
+        <line>
+          The objective is to grab the wool on the other team's side and return it to your base.
+        </line>
+      </message>
+      <message lang="ja_JP">
+        <line>このマップは`a`lCapture the Wool`r(CTW)マップです。</line>
+        <line>敵チームの羊毛部屋から羊毛を奪取して拠点に持ち帰る事が目標になります。</line>
+      </message>
+      <teleport>
+        <point yaw="180" pitch="90">0,110,0</point>
+      </teleport>
+    </stage>
+    <stage title="Green team's">
+      <title lang="ja_JP">Greenチーム</title>
+      <message>
+        <line>
+          These are `2Green team`r's wool rooms housing `bCyan `rand `3Light Blue`r.
+        </line>
+        <line>
+          `2Green Team`r should defend these rooms against `5Purple Team`r invaders who are trying to steal the wool and make it back alive.
+        </line>
+      </message>
+      <message lang="ja_JP">
+        <line>`2Greenチーム`rは`bCyan`rと`3Light Blue`rの羊毛ルームがあります。</line>
+        <line>`2Greenチーム`rは羊毛を奪取しようとする`5Purpleチーム`rの攻撃からこの羊毛ルームを防衛する必要があります。</line>
+      </message>
+      <teleport>
+        <point yaw="-90" pitch="30">70,40,0</point>
+      </teleport>
+    </stage>
+    <stage title="Purple team's">
+      <title lang="ja_JP">Purpleチーム</title>
+      <message>
+        <line>
+          These are `5Purple team`r's wool rooms housing `dPink `rand `6Orange`r.
+        </line>
+        <line>
+          `5Purple Team`r should defend these rooms against `2Green Team`r invaders who are trying to steal the wool and make it back alive.
+        </line>
+      </message>
+      <message lang="ja_JP">
+        <line>`5Purpleチーム`rは`dPink`rと`6Orange`rの羊毛ルームがあります。</line>
+        <line>`5Purpleチーム`rは羊毛を奪取しようとする`2Greenチーム`rの攻撃からこの羊毛ルームを防衛する必要があります。</line>
+      </message>
+      <teleport>
+        <point yaw="90" pitch="30">-70,40,0</point>
+      </teleport>
+    </stage>
+    <stage title="Green team's Base">
+      <title lang="ja_JP">Greenチームの拠点</title>
+      <message>
+        <line>
+          Here is the `2Green team `rvictory monument and spawn where the captured wool must be placed.
+        </line>
+        <line>Both wools must be placed to win.</line>
+      </message>
+      <message lang="ja_JP">
+        <line>ここは`2Greenチーム`rの台座とスポーンポイントです。</line>
+        <line>勝利するためには両方の羊毛を設置しなければなりません。</line>
+      </message>
+      <teleport>
+        <point yaw="90" pitch="10">160,25,0</point>
+      </teleport>
+    </stage>
+    <stage title="Purple team's Base">
+      <title lang="ja_JP">Purpleチームの拠点</title>
+      <message>
+        <line>
+          Here is the `5Purple team `rvictory monument and spawn where the captured wool must be placed.
+        </line>
+        <line>Both wools must be placed to win.</line>
+      </message>
+      <message lang="ja_JP">
+        <line>ここは`5Purpleチーム`rの台座とスポーンポイントです。</line>
+        <line>勝利するためには両方の羊毛を設置しなければなりません。</line>
+      </message>
+      <teleport>
+        <point yaw="-90" pitch="10">-160,25,0</point>
+      </teleport>
+    </stage>
+  </tutorial>
+</map>
